@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.content.SharedPreferences;
 
 import androidx.core.content.ContextCompat;
@@ -23,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private Button buttonStart, buttonStop, buttonRestart;
     private TextView textInfoService, textInfoSettings;
 
-    private String message;
+    private String message, dropdown_time;
     private Boolean show_time, work, work_double;
 
     @Override
@@ -64,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         startIntent.putExtra(MyForegroundService.TIME,show_time);
         startIntent.putExtra(MyForegroundService.WORK,work);
         startIntent.putExtra(MyForegroundService.WORK_DOUBLE,work_double);
+        startIntent.putExtra(MyForegroundService.DROPDOWN_TIME,dropdown_time);
 
 
         ContextCompat.startForegroundService(this, startIntent);
@@ -90,11 +90,13 @@ public class MainActivity extends AppCompatActivity {
         show_time = sharedPreferences.getBoolean("show_time", true);
         work = sharedPreferences.getBoolean("sync",true);
         work_double = sharedPreferences.getBoolean("double", false);
+        dropdown_time = sharedPreferences.getString("dropdown","2000");
 
         return "Message: " + message + "\n"
                 +"show_time: " + show_time.toString() +"\n"
                 +"work: " + work.toString() + "\n"
-                +"double: " + work_double.toString();
+                +"double: " + work_double.toString() + "\n"
+                +"counter_speed: " + dropdown_time + "ms";
     }
 
     private void updateUI(){
